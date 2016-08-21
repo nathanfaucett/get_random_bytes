@@ -15,7 +15,18 @@ function getRandomBytes(size) {
 }
 
 
-if (hasUint8Array) {
+if (
+    (function() {
+        var buffer;
+        try {
+            buffer = new Buffer("test");
+            new NativeUint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / BYTES_PER_ELEMENT);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }())
+) {
     bufferToUint8Array = function bufferToUint8Array(buffer) {
         return new NativeUint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / BYTES_PER_ELEMENT);
     };
