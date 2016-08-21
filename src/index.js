@@ -17,11 +17,11 @@ function getRandomBytes(size) {
 
 if (
     (function() {
-        var buffer;
+        var buffer, bytes;
         try {
-            buffer = new Buffer("test");
-            new NativeUint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / BYTES_PER_ELEMENT);
-            return true;
+            buffer = new Buffer("\0");
+            bytes = new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / BYTES_PER_ELEMENT);
+            return bytes.length === 1;
         } catch (e) {
             return false;
         }
